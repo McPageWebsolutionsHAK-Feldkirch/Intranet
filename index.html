@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,34 +65,6 @@
     </style>
 </head>
 <body>
-    <script>
-    // Get the main-content div
-const mainContent = document.querySelector('.main-content');
-
-// Add event listener for Artikel 1
-document.querySelector('#artikel1').addEventListener('click', (e) => {
-    e.preventDefault(); // Prevent default link behavior
-
-    const url = e.target.dataset.url; // Get the URL from the data attribute
-
-    // Fetch the content of Artikel 1
-    fetch(url)
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text(); // Get the HTML content as text
-        })
-        .then((html) => {
-            mainContent.innerHTML = html; // Replace the content of main-content
-        })
-        .catch((error) => {
-            console.error('Error fetching the content:', error);
-            mainContent.innerHTML = `<p style="color: red;">Fehler: Inhalt konnte nicht geladen werden.</p>`;
-        });
-});
-    </script>
-
     <!-- Login and Logout Buttons -->
     <button class="login-btn" id="loginBtn">Login</button>
     <button class="logout-btn" id="logoutBtn">Logout</button>
@@ -107,7 +79,7 @@ document.querySelector('#artikel1').addEventListener('click', (e) => {
     <div class="content">
         <div class="sidebar">
             <h2>Artikel</h2>
-            <a href="#" id="artikel1" data-url="Artikel/artikel1.html">Artikel 1</a>
+            <a href="#">Artikel 1</a>
             <a href="#">Artikel 2</a>
             <a href="#">Artikel 3</a>
             <a href="#">Artikel 4</a>
