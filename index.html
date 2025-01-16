@@ -62,6 +62,61 @@
         .calendar td.empty {
             background-color: #f9f9f9;
         }
+
+        /* Styles for Login Popup */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .login-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            border-radius: 10px;
+            width: 300px;
+        }
+
+        .login-popup h2 {
+            margin: 0 0 20px;
+        }
+
+        .login-popup input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .login-popup button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-popup button.close-btn {
+            background-color: #FF4136;
+        }
+
+        .login-popup button:hover {
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
@@ -113,6 +168,7 @@
         </div>
     </div>
 
+    <!-- Login Popup -->
     <div class="overlay" id="overlay"></div>
     <div class="login-popup" id="loginPopup">
         <h2>Login</h2>
@@ -135,117 +191,23 @@
             { id: 6, name: "Luca Cioran", password: "lucac" },
             { id: 7, name: "Florian Kessler", password: "floriank" },
             { id: 8, name: "Morris Wernautz", password: "morrisw" },
-            { id: 9, name: "Paul Hebein", password: "paulh" },
-            { id: 10, name: "Achileas Gruber", password: "achileasg" },
-            { id: 11, name: "Clemens Bickel", password: "clemensb" },
-            { id: 12, name: "Laurenz Welte", password: "laurenzw" },
-            { id: 13, name: "Sandro Mier", password: "sandrom" },
-            { id: 14, name: "Sura Caliskan", password: "surac" },
-            { id: 15, name: "Betül Altintas", password: "betüla" },
-            { id: 16, name: "Theresa Ess", password: "theresae" },
-            { id: 17, name: "Pia Jäger", password: "piaj" },
-            { id: 18, name: "Jonas Ditzer", password: "jonasd" }
+            { id: 9, name: "Paul Hebein", password: "paulh" }
         ];
 
-        const calendarBody = document.getElementById('calendarBody');
-        const monthYear = document.getElementById('monthYear');
-        const prevMonth = document.getElementById('prevMonth');
-        const nextMonth = document.getElementById('nextMonth');
         const loginBtn = document.getElementById('loginBtn');
         const logoutBtn = document.getElementById('logoutBtn');
         const loginPopup = document.getElementById('loginPopup');
-        const closePopup = document.getElementById('closePopup');
         const overlay = document.getElementById('overlay');
+        const closePopup = document.getElementById('closePopup');
         const loginSubmit = document.getElementById('loginSubmit');
 
-        let currentSession = null; // To store session info
+        let currentSession = null;
 
-        // Initialize date variables
-        let currentYear = new Date().getFullYear();
-        let currentMonth = new Date().getMonth();
-
-        // Array of month names
-        const monthNames = [
-            'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
-            'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
-        ];
-
-        // Function to generate calendar
-        function generateCalendar(year, month) {
-            // Clear existing calendar
-            calendarBody.innerHTML = '';
-
-            // Set the header to the current month and year
-            monthYear.textContent = `${monthNames[month]} ${year}`;
-
-            // Get the first day of the month
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-            // Adjust first day (Monday as first day of the week)
-            const startDay = (firstDay === 0 ? 6 : firstDay - 1);
-
-            // Create rows for the calendar
-            let row = document.createElement('tr');
-
-            // Fill initial empty cells
-            for (let i = 0; i < startDay; i++) {
-                const cell = document.createElement('td');
-                cell.classList.add('empty');
-                row.appendChild(cell);
-            }
-
-            // Fill the days of the month
-            for (let day = 1; day <= daysInMonth; day++) {
-                if (row.children.length === 7) {
-                    calendarBody.appendChild(row);
-                    row = document.createElement('tr');
-                }
-
-                const cell = document.createElement('td');
-                cell.textContent = day;
-                row.appendChild(cell);
-            }
-
-            // Fill remaining empty cells
-            while (row.children.length < 7) {
-                const cell = document.createElement('td');
-                cell.classList.add('empty');
-                row.appendChild(cell);
-            }
-
-            calendarBody.appendChild(row);
-        }
-
-        // Event listeners for navigation
-        prevMonth.addEventListener('click', () => {
-            currentMonth--;
-            if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear--;
-            }
-            generateCalendar(currentYear, currentMonth);
-        });
-
-        nextMonth.addEventListener('click', () => {
-            currentMonth++;
-            if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            }
-            generateCalendar(currentYear, currentMonth);
-        });
-
-        // Generate the initial calendar
-        generateCalendar(currentYear, currentMonth);
-
-        // Show Login Popup
         loginBtn.addEventListener('click', () => {
             loginPopup.style.display = 'block';
             overlay.style.display = 'block';
         });
 
-        // Hide Login Popup
         closePopup.addEventListener('click', () => {
             loginPopup.style.display = 'none';
             overlay.style.display = 'none';
@@ -256,7 +218,6 @@
             overlay.style.display = 'none';
         });
 
-        // Handle Login Submission
         loginSubmit.addEventListener('click', () => {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
@@ -264,22 +225,17 @@
             const user = users.find(u => u.name === username && u.password === password);
 
             if (user) {
-                currentSession = {
-                    userId: user.id,
-                    sessionId: Math.random().toString(36).substring(2),
-                };
-                alert(`Willkommen, ${user.name}! Session-ID: ${currentSession.sessionId}`);
-
-                loginPopup.style.display = 'none';
-                overlay.style.display = 'none';
+                currentSession = { userId: user.id, sessionId: Math.random().toString(36).substring(2) };
+                alert(`Willkommen, ${user.name}!`);
                 loginBtn.style.display = 'none';
                 logoutBtn.style.display = 'block';
+                loginPopup.style.display = 'none';
+                overlay.style.display = 'none';
             } else {
                 alert('Ungültige Anmeldedaten!');
             }
         });
 
-        // Handle Logout
         logoutBtn.addEventListener('click', () => {
             currentSession = null;
             alert('Sie haben sich erfolgreich ausgeloggt.');
