@@ -79,21 +79,12 @@
             background: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
-
-        /* Positioning Login Button on Right Side of Content */
-        .content {
-            position: relative; /* Add relative positioning */
-            display: flex;
-            justify-content: space-between; /* Distribute children with space between them */
-            align-items: flex-start; /* Align children at the start vertically */
-        }
-
-        .content .login-btn {
-            position: static; /* Reset position to static for flexbox */
-        }
     </style>
 </head>
 <body>
+    <!-- Login Button -->
+    <button class="login-btn" id="loginBtn">Login</button>
+
     <!-- Header Section -->
     <div class="header">
         <img src="Bilder/McPage-Logo-Hell.png" alt="Logo">
@@ -137,9 +128,6 @@
                 </table>
             </div>
         </div>
-
-        <!-- Login Button -->
-        <button class="login-btn" id="loginBtn">Login</button>
     </div>
 
     <!-- Login Popup -->
