@@ -5,203 +5,205 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <style>
-    /* General styles */
-    body {
-        font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f0f4f8; /* Hellgrauer Hintergrund */
-        color: #333;
-    }
+        /* General styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8; /* Hellgrauer Hintergrund */
+            color: #333;
+        }
 
-    .header {
-        display: flex;
-        align-items: center;
-        padding: 20px;
-        background-color: #37474f; /* Dunkles Blau-Grau */
-        color: #fff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #37474f; /* Dunkles Blau-Grau */
+            color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
-    .header img {
-        height: 50px;
-        margin-right: 20px;
-    }
+        .header img {
+            height: 50px;
+            margin-right: 20px;
+        }
 
-    .header h1 {
-        margin: 0;
-        font-size: 24px;
-    }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
 
-    .content {
-        display: flex;
-    }
+        .content {
+            display: flex;
+        }
 
-    .sidebar {
-        width: 200px;
-        padding: 20px;
-        background-color: #546e7a; /* Mittelgraues Blau */
-        color: white;
-        height: 100vh;
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    }
+        .sidebar {
+            width: 200px;
+            padding: 20px;
+            background-color: #546e7a; /* Mittelgraues Blau */
+            color: white;
+            height: 100vh;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
 
-    .sidebar h2 {
-        margin-top: 0;
-        font-size: 18px;
-    }
+        .sidebar h2 {
+            margin-top: 0;
+            font-size: 18px;
+        }
 
-    .sidebar a {
-        display: block;
-        margin-bottom: 10px;
-        color: #b0bec5; /* Hellgrau-Blau */
-        text-decoration: none;
-        transition: color 0.3s;
-    }
+        .sidebar a {
+            display: block;
+            margin-bottom: 10px;
+            color: #b0bec5; /* Hellgrau-Blau */
+            text-decoration: none;
+            transition: color 0.3s;
+        }
 
-    .sidebar a:hover {
-        color: #eceff1; /* Sehr helles Grau */
-    }
+        .sidebar a:hover {
+            color: #eceff1; /* Sehr helles Grau */
+        }
 
-    .main-content {
-        flex: 1;
-        padding: 20px;
-        background-color: #eceff1; /* Sehr hellgrauer Hintergrund */
-    }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background-color: #eceff1; /* Sehr hellgrauer Hintergrund */
+        }
 
-    /* Calendar styles */
-    .calendar {
-        margin-top: 20px;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
+        /* Calendar styles */
+        .calendar {
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
 
-    .calendar .controls {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px;
-        background-color: #37474f; /* Dunkles Blau-Grau */
-        color: white;
-    }
+        .calendar .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #37474f; /* Dunkles Blau-Grau */
+            color: white;
+        }
 
-    .calendar .controls button {
-        background-color: #546e7a; /* Mittelgrau-Blau */
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
+        .calendar .controls button {
+            background-color: #546e7a; /* Mittelgrau-Blau */
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-    .calendar .controls button:hover {
-        background-color: #455a64; /* Dunkleres Grau-Blau */
-    }
+        .calendar .controls button:hover {
+            background-color: #455a64; /* Dunkleres Grau-Blau */
+        }
 
-    .calendar table {
-        width: 100%;
-        border-collapse: collapse;
-    }
+        .calendar table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-    .calendar th, .calendar td {
-        text-align: center;
-        padding: 15px;
-        border: 1px solid #ddd;
-    }
+        .calendar th, .calendar td {
+            text-align: center;
+            padding: 15px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
 
-    .calendar th {
-        background-color: #546e7a; /* Mittelgraues Blau */
-        color: white;
-    }
+        .calendar th {
+            background-color: #546e7a; /* Mittelgraues Blau */
+            color: white;
+        }
 
-    .calendar td.empty {
-        background-color: #f0f4f8; /* Hellgrauer Hintergrund */
-    }
+        .calendar td.empty {
+            background-color: #f0f4f8; /* Hellgrauer Hintergrund */
+            cursor: default;
+        }
 
-    /* Login and logout buttons */
-    .login-btn, .logout-btn {
-        position: absolute;
-        top: 30px;
-        right: 10px;
-        padding: 10px 20px;
-        background-color: #546e7a; /* Mittelgrau-Blau */
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
+        .calendar td.today {
+            background-color: #ffcc80; /* Orange für heutigen Tag */
+        }
 
-    .login-btn:hover, .logout-btn:hover {
-        background-color: #37474f; /* Dunkleres Blau-Grau */
-    }
+        .calendar td.event {
+            background-color: #90caf9; /* Hellblau für Ereignistage */
+            position: relative;
+        }
 
-    .logout-btn {
-        display: none;
-    }
+        .calendar td.event:hover:after {
+            content: attr(data-event);
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #546e7a;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
 
-    /* Login popup styles */
-    .overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-    }
+        /* Login Popup styles */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
 
-    .login-popup {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        z-index: 1001;
-        border-radius: 10px;
-        width: 300px;
-    }
+        .login-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            border-radius: 10px;
+            width: 300px;
+        }
 
-    .login-popup h2 {
-        margin: 0 0 20px;
-        font-size: 18px;
-        color: #37474f; /* Dunkles Blau-Grau */
-    }
+        .login-popup h2 {
+            margin: 0 0 20px;
+            font-size: 18px;
+            color: #37474f; /* Dunkles Blau-Grau */
+        }
 
-    .login-popup input {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
+        .login-popup input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
 
-    .login-popup button {
-        padding: 10px 20px;
-        background-color: #546e7a; /* Mittelgrau-Blau */
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
+        .login-popup button {
+            padding: 10px 20px;
+            background-color: #546e7a; /* Mittelgrau-Blau */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-    .login-popup button.close-btn {
-        background-color: #ff6f61; /* Hellrot für Schließen */
-    }
+        .login-popup button.close-btn {
+            background-color: #ff6f61; /* Hellrot für Schließen */
+        }
 
-    .login-popup button:hover {
-        opacity: 0.9;
-    }
-</style>
-
+        .login-popup button:hover {
+            opacity: 0.9;
+        }
+    </style>
 </head>
 <body>
     <!-- Login and Logout Buttons -->
@@ -268,6 +270,8 @@
             { id: 1, name: "Georg Marxer", password: "georgm" }
         ];
 
+        const events = {}; // To store events in the format { "YYYY-MM-DD": "Event description" }
+
         const loginBtn = document.getElementById('loginBtn');
         const logoutBtn = document.getElementById('logoutBtn');
         const loginPopup = document.getElementById('loginPopup');
@@ -290,45 +294,55 @@
             monthYear.textContent = `${monthNames[month]} ${year}`;
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = new Date();
             let startDay = (firstDay === 0 ? 6 : firstDay - 1);
             let row = document.createElement('tr');
+
             for (let i = 0; i < startDay; i++) row.appendChild(document.createElement('td')).classList.add('empty');
+
             for (let day = 1; day <= daysInMonth; day++) {
                 if (row.children.length === 7) {
                     calendarBody.appendChild(row);
                     row = document.createElement('tr');
                 }
-                row.appendChild(document.createElement('td')).textContent = day;
+                const cell = document.createElement('td');
+                cell.textContent = day;
+                const cellDate = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+                if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+                    cell.classList.add('today');
+                }
+                if (events[cellDate]) {
+                    cell.classList.add('event');
+                    cell.setAttribute('data-event', events[cellDate]);
+                }
+                if (currentSession) {
+                    cell.addEventListener('click', () => {
+                        const eventText = prompt('Event eingeben für ' + cellDate);
+                        if (eventText) {
+                            events[cellDate] = eventText;
+                            generateCalendar(year, month);
+                        }
+                    });
+                }
+                row.appendChild(cell);
             }
+
             while (row.children.length < 7) row.appendChild(document.createElement('td')).classList.add('empty');
+
             calendarBody.appendChild(row);
         }
 
-        prevMonth.addEventListener('click', () => {
-            currentMonth = (currentMonth - 1 + 12) % 12;
-            currentYear = currentMonth === 11 ? currentYear - 1 : currentYear;
+        function toggleLoginPopup(show) {
+            loginPopup.style.display = show ? 'block' : 'none';
+            overlay.style.display = show ? 'block' : 'none';
+        }
+
+        loginBtn.addEventListener('click', () => toggleLoginPopup(true));
+        closePopup.addEventListener('click', () => toggleLoginPopup(false));
+        logoutBtn.addEventListener('click', () => {
+            currentSession = null;
+            alert('Erfolgreich ausgeloggt!');
             generateCalendar(currentYear, currentMonth);
-        });
-
-        nextMonth.addEventListener('click', () => {
-            currentMonth = (currentMonth + 1) % 12;
-            currentYear = currentMonth === 0 ? currentYear + 1 : currentYear;
-            generateCalendar(currentYear, currentMonth);
-        });
-
-        loginBtn.addEventListener('click', () => {
-            loginPopup.style.display = 'block';
-            overlay.style.display = 'block';
-        });
-
-        closePopup.addEventListener('click', () => {
-            loginPopup.style.display = 'none';
-            overlay.style.display = 'none';
-        });
-
-        overlay.addEventListener('click', () => {
-            loginPopup.style.display = 'none';
-            overlay.style.display = 'none';
         });
 
         loginSubmit.addEventListener('click', () => {
@@ -336,22 +350,25 @@
             const password = document.getElementById('password').value;
             const user = users.find(u => u.name === username && u.password === password);
             if (user) {
+                currentSession = user;
+                toggleLoginPopup(false);
                 alert(`Willkommen, ${user.name}!`);
-                currentSession = { userId: user.id, sessionId: Math.random().toString(36).substring(2) };
-                loginBtn.style.display = 'none';
-                logoutBtn.style.display = 'block';
-                loginPopup.style.display = 'none';
-                overlay.style.display = 'none';
+                generateCalendar(currentYear, currentMonth);
             } else {
-                alert('Ungültige Anmeldedaten!');
+                alert('Benutzername oder Passwort falsch.');
             }
         });
 
-        logoutBtn.addEventListener('click', () => {
-            currentSession = null;
-            alert('Erfolgreich ausgeloggt.');
-            loginBtn.style.display = 'block';
-            logoutBtn.style.display = 'none';
+        prevMonth.addEventListener('click', () => {
+            currentMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+            currentYear = currentMonth === 11 ? currentYear - 1 : currentYear;
+            generateCalendar(currentYear, currentMonth);
+        });
+
+        nextMonth.addEventListener('click', () => {
+            currentMonth = currentMonth === 11 ? 0 : currentMonth + 1;
+            currentYear = currentMonth === 0 ? currentYear + 1 : currentYear;
+            generateCalendar(currentYear, currentMonth);
         });
 
         generateCalendar(currentYear, currentMonth);
