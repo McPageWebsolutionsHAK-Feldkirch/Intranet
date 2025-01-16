@@ -10,15 +10,16 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f4f8; /* Hellgrauer Hintergrund */
+            background-color: #f0f4f8;
             color: #333;
         }
 
         .header {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 20px;
-            background-color: #37474f; /* Dunkles Blau-Grau */
+            background-color: #37474f;
             color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
@@ -33,6 +34,21 @@
             font-size: 24px;
         }
 
+        .header .auth-btn {
+            background-color: #546e7a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .header .auth-btn:hover {
+            background-color: #455a64;
+        }
+
         .content {
             display: flex;
         }
@@ -40,7 +56,7 @@
         .sidebar {
             width: 200px;
             padding: 20px;
-            background-color: #546e7a; /* Mittelgraues Blau */
+            background-color: #546e7a;
             color: white;
             height: 100vh;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -54,19 +70,19 @@
         .sidebar a {
             display: block;
             margin-bottom: 10px;
-            color: #b0bec5; /* Hellgrau-Blau */
+            color: #b0bec5;
             text-decoration: none;
             transition: color 0.3s;
         }
 
         .sidebar a:hover {
-            color: #eceff1; /* Sehr helles Grau */
+            color: #eceff1;
         }
 
         .main-content {
             flex: 1;
             padding: 20px;
-            background-color: #eceff1; /* Sehr hellgrauer Hintergrund */
+            background-color: #eceff1;
         }
 
         /* Calendar styles */
@@ -83,12 +99,12 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px;
-            background-color: #37474f; /* Dunkles Blau-Grau */
+            background-color: #37474f;
             color: white;
         }
 
         .calendar .controls button {
-            background-color: #546e7a; /* Mittelgrau-Blau */
+            background-color: #546e7a;
             color: white;
             border: none;
             padding: 5px 10px;
@@ -98,7 +114,7 @@
         }
 
         .calendar .controls button:hover {
-            background-color: #455a64; /* Dunkleres Grau-Blau */
+            background-color: #455a64;
         }
 
         .calendar table {
@@ -114,21 +130,21 @@
         }
 
         .calendar th {
-            background-color: #546e7a; /* Mittelgraues Blau */
+            background-color: #546e7a;
             color: white;
         }
 
         .calendar td.empty {
-            background-color: #f0f4f8; /* Hellgrauer Hintergrund */
+            background-color: #f0f4f8;
             cursor: default;
         }
 
         .calendar td.today {
-            background-color: #ffcc80; /* Orange für heutigen Tag */
+            background-color: #ffcc80;
         }
 
         .calendar td.event {
-            background-color: #90caf9; /* Hellblau für Ereignistage */
+            background-color: #90caf9;
             position: relative;
         }
 
@@ -175,7 +191,7 @@
         .login-popup h2 {
             margin: 0 0 20px;
             font-size: 18px;
-            color: #37474f; /* Dunkles Blau-Grau */
+            color: #37474f;
         }
 
         .login-popup input {
@@ -188,7 +204,7 @@
 
         .login-popup button {
             padding: 10px 20px;
-            background-color: #546e7a; /* Mittelgrau-Blau */
+            background-color: #546e7a;
             color: white;
             border: none;
             border-radius: 5px;
@@ -197,7 +213,7 @@
         }
 
         .login-popup button.close-btn {
-            background-color: #ff6f61; /* Hellrot für Schließen */
+            background-color: #ff6f61;
         }
 
         .login-popup button:hover {
@@ -206,14 +222,13 @@
     </style>
 </head>
 <body>
-    <!-- Login and Logout Buttons -->
-    <button class="login-btn" id="loginBtn">Login</button>
-    <button class="logout-btn" id="logoutBtn">Logout</button>
-
     <!-- Header Section -->
     <div class="header">
-        <img src="Bilder/McPage-Logo-Hell.png" alt="Logo">
-        <h1>Intranet</h1>
+        <div>
+            <img src="Bilder/McPage-Logo-Hell.png" alt="Logo">
+            <h1>Intranet</h1>
+        </div>
+        <button class="auth-btn" id="authBtn">Login</button>
     </div>
 
     <!-- Content Section -->
@@ -270,10 +285,8 @@
             { id: 1, name: "Georg Marxer", password: "georgm" }
         ];
 
-        const events = {}; // To store events in the format { "YYYY-MM-DD": "Event description" }
-
-        const loginBtn = document.getElementById('loginBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
+        const events = {};
+        const authBtn = document.getElementById('authBtn');
         const loginPopup = document.getElementById('loginPopup');
         const overlay = document.getElementById('overlay');
         const closePopup = document.getElementById('closePopup');
@@ -337,13 +350,18 @@
             overlay.style.display = show ? 'block' : 'none';
         }
 
-        loginBtn.addEventListener('click', () => toggleLoginPopup(true));
-        closePopup.addEventListener('click', () => toggleLoginPopup(false));
-        logoutBtn.addEventListener('click', () => {
-            currentSession = null;
-            alert('Erfolgreich ausgeloggt!');
-            generateCalendar(currentYear, currentMonth);
+        authBtn.addEventListener('click', () => {
+            if (currentSession) {
+                currentSession = null;
+                authBtn.textContent = 'Login';
+                alert('Erfolgreich ausgeloggt!');
+                generateCalendar(currentYear, currentMonth);
+            } else {
+                toggleLoginPopup(true);
+            }
         });
+
+        closePopup.addEventListener('click', () => toggleLoginPopup(false));
 
         loginSubmit.addEventListener('click', () => {
             const username = document.getElementById('username').value;
@@ -351,6 +369,7 @@
             const user = users.find(u => u.name === username && u.password === password);
             if (user) {
                 currentSession = user;
+                authBtn.textContent = 'Logout';
                 toggleLoginPopup(false);
                 alert(`Willkommen, ${user.name}!`);
                 generateCalendar(currentYear, currentMonth);
