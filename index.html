@@ -4,30 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="Styles/index.css">
     <style>
-        /* Style for the Login and Logout Buttons */
-        .login-btn, .logout-btn {
-            position: absolute;
-            top: 30px;
-            right: 10px;
-            padding: 10px 20px;
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
             background-color: #007BFF;
             color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
         }
 
-        .login-btn:hover, .logout-btn:hover {
-            background-color: #0056b3;
+        .header img {
+            height: 50px;
+            margin-right: 20px;
         }
 
-        .logout-btn {
-            display: none; /* Initially hidden */
+        .header h1 {
+            margin: 0;
         }
 
-        /* Style for the Calendar */
+        .content {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 200px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+        }
+
+        .sidebar a {
+            display: block;
+            margin-bottom: 10px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* Calendar styles */
         .calendar {
             margin-top: 20px;
         }
@@ -55,15 +83,32 @@
             color: white;
         }
 
-        .calendar td {
-            height: 50px;
-        }
-
         .calendar td.empty {
             background-color: #f9f9f9;
         }
 
-        /* Styles for Login Popup */
+        /* Login and logout buttons */
+        .login-btn, .logout-btn {
+            position: absolute;
+            top: 30px;
+            right: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-btn:hover, .logout-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .logout-btn {
+            display: none;
+        }
+
+        /* Login popup styles */
         .overlay {
             display: none;
             position: fixed;
@@ -160,9 +205,7 @@
                             <th>So</th>
                         </tr>
                     </thead>
-                    <tbody id="calendarBody">
-                        <!-- Calendar rows will be generated dynamically -->
-                    </tbody>
+                    <tbody id="calendarBody"></tbody>
                 </table>
             </div>
         </div>
@@ -182,16 +225,8 @@
 
     <script>
         const users = [
-            { id: 0, name: "gyoergyfalvay", vorname: "amelie", password: "amelieg" },
-            { id: 1, name: "Georg Marxer", password: "georgm" },
-            { id: 2, name: "Loredana Schöch", password: "loredanas" },
-            { id: 3, name: "Bianca Pop", password: "biancap" },
-            { id: 4, name: "Bianca Hrach", password: "biancah" },
-            { id: 5, name: "Luca Müller", password: "lucam" },
-            { id: 6, name: "Luca Cioran", password: "lucac" },
-            { id: 7, name: "Florian Kessler", password: "floriank" },
-            { id: 8, name: "Morris Wernautz", password: "morrisw" },
-            { id: 9, name: "Paul Hebein", password: "paulh" }
+            { id: 0, name: "gyoergyfalvay", password: "amelieg" },
+            { id: 1, name: "Georg Marxer", password: "georgm" }
         ];
 
         const loginBtn = document.getElementById('loginBtn');
@@ -200,8 +235,47 @@
         const overlay = document.getElementById('overlay');
         const closePopup = document.getElementById('closePopup');
         const loginSubmit = document.getElementById('loginSubmit');
+        const calendarBody = document.getElementById('calendarBody');
+        const monthYear = document.getElementById('monthYear');
+        const prevMonth = document.getElementById('prevMonth');
+        const nextMonth = document.getElementById('nextMonth');
 
+        let currentYear = new Date().getFullYear();
+        let currentMonth = new Date().getMonth();
         let currentSession = null;
+
+        const monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+
+        function generateCalendar(year, month) {
+            calendarBody.innerHTML = '';
+            monthYear.textContent = `${monthNames[month]} ${year}`;
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            let startDay = (firstDay === 0 ? 6 : firstDay - 1);
+            let row = document.createElement('tr');
+            for (let i = 0; i < startDay; i++) row.appendChild(document.createElement('td')).classList.add('empty');
+            for (let day = 1; day <= daysInMonth; day++) {
+                if (row.children.length === 7) {
+                    calendarBody.appendChild(row);
+                    row = document.createElement('tr');
+                }
+                row.appendChild(document.createElement('td')).textContent = day;
+            }
+            while (row.children.length < 7) row.appendChild(document.createElement('td')).classList.add('empty');
+            calendarBody.appendChild(row);
+        }
+
+        prevMonth.addEventListener('click', () => {
+            currentMonth = (currentMonth - 1 + 12) % 12;
+            currentYear = currentMonth === 11 ? currentYear - 1 : currentYear;
+            generateCalendar(currentYear, currentMonth);
+        });
+
+        nextMonth.addEventListener('click', () => {
+            currentMonth = (currentMonth + 1) % 12;
+            currentYear = currentMonth === 0 ? currentYear + 1 : currentYear;
+            generateCalendar(currentYear, currentMonth);
+        });
 
         loginBtn.addEventListener('click', () => {
             loginPopup.style.display = 'block';
@@ -221,12 +295,10 @@
         loginSubmit.addEventListener('click', () => {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-
             const user = users.find(u => u.name === username && u.password === password);
-
             if (user) {
-                currentSession = { userId: user.id, sessionId: Math.random().toString(36).substring(2) };
                 alert(`Willkommen, ${user.name}!`);
+                currentSession = { userId: user.id, sessionId: Math.random().toString(36).substring(2) };
                 loginBtn.style.display = 'none';
                 logoutBtn.style.display = 'block';
                 loginPopup.style.display = 'none';
@@ -238,10 +310,12 @@
 
         logoutBtn.addEventListener('click', () => {
             currentSession = null;
-            alert('Sie haben sich erfolgreich ausgeloggt.');
+            alert('Erfolgreich ausgeloggt.');
             loginBtn.style.display = 'block';
             logoutBtn.style.display = 'none';
         });
+
+        generateCalendar(currentYear, currentMonth);
     </script>
 </body>
 </html>
