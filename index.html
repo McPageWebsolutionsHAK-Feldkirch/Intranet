@@ -5,164 +5,203 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <style>
-        /* General styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+    /* General styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f4f8; /* Hellgrauer Hintergrund */
+        color: #333;
+    }
 
-        .header {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            background-color: #007BFF;
-            color: white;
-        }
+    .header {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        background-color: #37474f; /* Dunkles Blau-Grau */
+        color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-        .header img {
-            height: 50px;
-            margin-right: 20px;
-        }
+    .header img {
+        height: 50px;
+        margin-right: 20px;
+    }
 
-        .header h1 {
-            margin: 0;
-        }
+    .header h1 {
+        margin: 0;
+        font-size: 24px;
+    }
 
-        .content {
-            display: flex;
-        }
+    .content {
+        display: flex;
+    }
 
-        .sidebar {
-            width: 200px;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
+    .sidebar {
+        width: 200px;
+        padding: 20px;
+        background-color: #546e7a; /* Mittelgraues Blau */
+        color: white;
+        height: 100vh;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
 
-        .sidebar h2 {
-            margin-top: 0;
-        }
+    .sidebar h2 {
+        margin-top: 0;
+        font-size: 18px;
+    }
 
-        .sidebar a {
-            display: block;
-            margin-bottom: 10px;
-            color: #007BFF;
-            text-decoration: none;
-        }
+    .sidebar a {
+        display: block;
+        margin-bottom: 10px;
+        color: #b0bec5; /* Hellgrau-Blau */
+        text-decoration: none;
+        transition: color 0.3s;
+    }
 
-        .main-content {
-            flex: 1;
-            padding: 20px;
-        }
+    .sidebar a:hover {
+        color: #eceff1; /* Sehr helles Grau */
+    }
 
-        /* Calendar styles */
-        .calendar {
-            margin-top: 20px;
-        }
+    .main-content {
+        flex: 1;
+        padding: 20px;
+        background-color: #eceff1; /* Sehr hellgrauer Hintergrund */
+    }
 
-        .calendar .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+    /* Calendar styles */
+    .calendar {
+        margin-top: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
 
-        .calendar table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+    .calendar .controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: #37474f; /* Dunkles Blau-Grau */
+        color: white;
+    }
 
-        .calendar th, .calendar td {
-            text-align: center;
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
+    .calendar .controls button {
+        background-color: #546e7a; /* Mittelgrau-Blau */
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
 
-        .calendar th {
-            background-color: #007BFF;
-            color: white;
-        }
+    .calendar .controls button:hover {
+        background-color: #455a64; /* Dunkleres Grau-Blau */
+    }
 
-        .calendar td.empty {
-            background-color: #f9f9f9;
-        }
+    .calendar table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-        /* Login and logout buttons */
-        .login-btn, .logout-btn {
-            position: absolute;
-            top: 30px;
-            right: 10px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    .calendar th, .calendar td {
+        text-align: center;
+        padding: 15px;
+        border: 1px solid #ddd;
+    }
 
-        .login-btn:hover, .logout-btn:hover {
-            background-color: #0056b3;
-        }
+    .calendar th {
+        background-color: #546e7a; /* Mittelgraues Blau */
+        color: white;
+    }
 
-        .logout-btn {
-            display: none;
-        }
+    .calendar td.empty {
+        background-color: #f0f4f8; /* Hellgrauer Hintergrund */
+    }
 
-        /* Login popup styles */
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-        }
+    /* Login and logout buttons */
+    .login-btn, .logout-btn {
+        position: absolute;
+        top: 30px;
+        right: 10px;
+        padding: 10px 20px;
+        background-color: #546e7a; /* Mittelgrau-Blau */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
 
-        .login-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 1001;
-            border-radius: 10px;
-            width: 300px;
-        }
+    .login-btn:hover, .logout-btn:hover {
+        background-color: #37474f; /* Dunkleres Blau-Grau */
+    }
 
-        .login-popup h2 {
-            margin: 0 0 20px;
-        }
+    .logout-btn {
+        display: none;
+    }
 
-        .login-popup input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
+    /* Login popup styles */
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
 
-        .login-popup button {
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    .login-popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        z-index: 1001;
+        border-radius: 10px;
+        width: 300px;
+    }
 
-        .login-popup button.close-btn {
-            background-color: #FF4136;
-        }
+    .login-popup h2 {
+        margin: 0 0 20px;
+        font-size: 18px;
+        color: #37474f; /* Dunkles Blau-Grau */
+    }
 
-        .login-popup button:hover {
-            opacity: 0.9;
-        }
-    </style>
+    .login-popup input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .login-popup button {
+        padding: 10px 20px;
+        background-color: #546e7a; /* Mittelgrau-Blau */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .login-popup button.close-btn {
+        background-color: #ff6f61; /* Hellrot für Schließen */
+    }
+
+    .login-popup button:hover {
+        opacity: 0.9;
+    }
+</style>
+
 </head>
 <body>
     <!-- Login and Logout Buttons -->
